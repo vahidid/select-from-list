@@ -23,10 +23,13 @@ export const selectedSlice = createSlice({
 		remove: (state, action: PayloadAction<number>) => {
 			state.items = state.items.filter((_, index) => index !== action.payload);
 		},
+		empty: (state) => {
+			state.items = [];
+		},
 	},
 });
 
-export const { add, remove } = selectedSlice.actions;
+export const { add, remove, empty } = selectedSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectSelectedList = (state: RootState) => state.selected.items;
