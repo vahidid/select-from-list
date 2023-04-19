@@ -1,13 +1,55 @@
-import { Card, Grid } from "@mui/material";
+import {
+	Box,
+	Card,
+	CardContent,
+	CardHeader,
+	Chip,
+	Grid,
+	Stack,
+	Typography,
+} from "@mui/material";
+import { useAppSelector } from "../../Hooks/redux";
+import { selectSelectedList } from "../../Redux/selectedSlice";
 
-function SelectedList() {
+interface IProps {
+	onClick: (index: number) => void;
+}
+
+function SelectedList(props: IProps) {
+	const { onClick } = props;
+	// Redux
+	const selectedList = useAppSelector(selectSelectedList);
+
 	return (
 		<Grid item xs={12} sm={6} md={4} height="100%">
-			<Card sx={{ overflow: "auto", height: "100%" }}>
-				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis
-				minus veniam omnis libero ipsam, beatae, harum dolor labore, aliquam
-				culpa quam? Maiores aspernatur distinctio quo perspiciatis? Harum
-				quaerat reprehenderit excepturi!
+			<Card
+				sx={{
+					overflow: "auto",
+					height: "100%",
+				}}
+			>
+				<Box p={3}>
+					<Typography variant="subtitle1">Tap to delete</Typography>
+					<CardContent>
+						<Stack
+							direction="row"
+							justifyContent="flex-start"
+							alignItems="flex-start"
+							width="100%"
+							flexWrap="wrap"
+							gap={1}
+						>
+							{selectedList.map((item, index) => (
+								<Chip
+									label={item}
+									onClick={() => {
+										onClick(index);
+									}}
+								/>
+							))}
+						</Stack>
+					</CardContent>
+				</Box>
 			</Card>
 		</Grid>
 	);
